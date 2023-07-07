@@ -111,7 +111,7 @@ if __name__ == '__main__':
     print('inputs are ready!')
 
     
-    # 멀티프로세싱(이슈)
+    # !! 멀티프로세싱: 이 부분이 돌아가도록 봐주시면 됩니다 !!
     ctx = mp.get_context('spawn')
     # with ctx.Pool(processes=20) as pool:
     #     results = pool.starmap(make_doc, tqdm(inputs, total=len(infos)))
@@ -134,3 +134,28 @@ if __name__ == '__main__':
     with open('/home/seunguk/KGEC/ranking/kowiki_ranked.json', 'w') as f:
         json.dump(dataset_dict, f, ensure_ascii=False)  # ensure_ascii=False: 한국어로 저장
     print('saved!')
+
+
+    # 만약 멀티프로세싱 4번 다하면, "4개"의 용량 아주 큰 json 파일이 만들어지잖아요,
+    # json 안에 [{0번 origin, origin length, augmented},
+    #           {1번 origin, origin length, augmented} ...]
+
+    # 1) 이걸 전체 큰 "1개"의 json 파일로 합치고 (대략 1700만개)
+    # 2) 각 딕셔너리 origin length로 문장 짧은~긴 순서대로 소팅이 필요해요 (이것도 데이터가 큰탓에 연산이 좀 걸릴거라 생각)
+    # json 안에 [{0번 origin, origin length, augmented}, ...] 있을 때 origin length로 sort
+
+    # 3) 이건 선택사항 이긴 한데
+    #    데이터가 워낙 크니까 (대략 1700만개 * 50개씩 노이즈 문장) (50이 에폭입니다.)
+    #    진짜 학습할 때 이걸 한방에 다~ 불러오지 말고, 에폭마다 불러오는게 어떨까 싶거든요
+
+    # 학습 시작 전에 1700만개 * 50개 한방에 부르기 vs. 에폭 50번 돌 때마다 1700만개씩 부르기
+    # 만약 전자로 하면, 불러오다가 또 이슈가 생길거 같아서
+    # 후자를 생각중인데, 그렇다면 1)2)까지 origin length로 sort한 큰 "1개"의 json파일을 "50개"의 json파일로 나눠줘야 합니다..!
+
+    # 기존 큰 "1개" json 파일
+    # [{origin1, aug1_1, aug1_2, aug1_3, ... aug1_50},
+       {origin2, aug2_1, aug2_2, aug2_3, ... aug2_50}]
+
+    # 제가 원하는 작은 "50개" json 파일
+    # json1 = [(origin1, aug1_1), (origin2, aug2_1), ... (origin50, aug50_1)]
+    # json2 = [(origin1, aug1_2), (origin2, aug2_2), ... (origin50, aug50_2)]
