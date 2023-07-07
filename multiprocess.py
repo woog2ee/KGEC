@@ -103,7 +103,8 @@ if __name__ == '__main__':
     print('tqdm ends')
 
 
+    # Add ensure_ascii=False
     dataset_dict = {'documents': result}
     with open('/home/seunguk/KGEC/ranking/kowiki_ranked.json', 'w') as f:
-        json.dump(dataset_dict, f)
+        json.dump(dataset_dict, f, ensure_ascii=False)
     print('saved!')
