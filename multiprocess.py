@@ -154,8 +154,9 @@ if __name__ == '__main__':
 
     # 기존 큰 "1개" json 파일
     # [{origin1, aug1_1, aug1_2, aug1_3, ... aug1_50},
-       {origin2, aug2_1, aug2_2, aug2_3, ... aug2_50}]
+    #  {origin2, aug2_1, aug2_2, aug2_3, ... aug2_50}]
 
     # 제가 원하는 작은 "50개" json 파일
     # json1 = [(origin1, aug1_1), (origin2, aug2_1), ... (origin50, aug50_1)]
     # json2 = [(origin1, aug1_2), (origin2, aug2_2), ... (origin50, aug50_2)]
+    # 여기까지 되는게 제가 생각한 이상적인 그림입니다..!
