@@ -83,6 +83,8 @@ def make_doc(idx, ns):
 
 if __name__ == '__main__':
     # 데이터프레임 4개 불러서 4번 멀티프로세싱 필요
+    # 다른 컬럼 다 필요없고 'sents', 'augmented' 컬럼 2개만 볼 예정
+    # 데이터프레임 불러오는 자체도 시간이 좀 걸릴거에요... 하다가 다른 방법으로 저장하시는 것도 방법
     # kowiki_splited_cutoff_augmented.csv, modu_splited_cutoff_augmented1, 2, 3.csv
     s_time = time.time()
     filename = '/home/seunguk/KGEC/ranking/kowiki_splited_cutoff_augmented.csv'
