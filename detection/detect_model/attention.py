@@ -5,20 +5,6 @@ import torch.nn.functional as F
 
 
 
-class Attention(nn.Module):
-    def forward(self, Q, K, V, mask=None, dropout=None):
-        print(f'\n {Q.shape} {K.shape} {V.shape} \n')
-        print(f'{mask.shape}')
-        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(Q.size(-1))
-        if mask != None: scores = scores.masked_fill(mask==0, -1e9)
-            
-        scores = F.softmax(scores, dim=-1)
-        if dropout != None: scores = dropout(scores)
-            
-        attn = torch.matmul(scores, V)
-        return attn, scores
-
-
 class MultiHeadAttention(nn.Module):
   def __init__(self, n_heads, d_model, dropout):
     super().__init__()
